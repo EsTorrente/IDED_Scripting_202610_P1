@@ -7,27 +7,39 @@
             included = new Stack<int>();
             excluded = new Stack<int>();
 
+            Stack<int> tempIncluded = new Stack<int>(); //para voltearlo al final
+            Stack<int> tempExcluded = new Stack<int>();
+
             foreach (int number in input)
             {
-                int absValue = Math.Abs(number);
+                //las condiciones que tengo que revisar es que: 1. sea cuadrado perfecto y 2. Si la raíz es impar, el número debe ser negativo y vis.
+                int absValue = Math.Abs(number); 
                 int root = (int)Math.Sqrt(absValue);
 
-                bool isPerfectSquare = root * root == absValue;
+                bool isPerfectSquare = root * root == absValue; //si no es ==, es porque la raíz tenía decimales y NO es cuadrado perfe :P
                 bool belongs = false;
 
                 if (isPerfectSquare)
                 {
-                    if (root % 2 != 0 && number < 0)
+                    if (root % 2 != 0 && number < 0) //si es impar, debe ser neg
                         belongs = true;
 
-                    if (root % 2 == 0 && number > 0)
+                    if (root % 2 == 0 && number > 0) //si es par, debe ser pos
                         belongs = true;
                 }
 
+                //lo meto en los temp
                 if (belongs)
-                    included.Push(number);
+                    tempIncluded.Push(number);
                 else
-                    excluded.Push(number);
+                    tempExcluded.Push(number);
+
+                //y aquí ya quedan invertidos :>
+                while (tempIncluded.Count > 0)
+                    included.Push(tempIncluded.Pop());
+
+                while (tempExcluded.Count > 0)
+                    excluded.Push(tempExcluded.Pop());
             }
         }
 
@@ -35,15 +47,15 @@
         {
             List<int> result = new List<int>();
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) //n términos
             {
                 int value = i * i;
 
-                if (i % 2 != 0)
+                if (i % 2 != 0) //aplico la fórmula. Si el número era par, queda pos. Si era impar, queda par.
                     value = -value;
 
                 int j = 0;
-                while (j < result.Count && result[j] < value)
+                while (j < result.Count && result[j] < value) //me muevo en el array mientras los numeritos sean menores que value
                 {
                     j++;
                 }
@@ -56,13 +68,9 @@
 
         public static bool FindNumberInSortedList(int target, in List<int> list)
         {
-            List<int> sorted = new List<int>();
+            List<int> sorted = new List<int>(list); // copio la lista para ordenarla sin dañar la original
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                sorted.Add(list[i]);
-            }
-
+            // ordeno
             for (int i = 0; i < sorted.Count - 1; i++)
             {
                 for (int j = 0; j < sorted.Count - 1 - i; j++)
@@ -76,12 +84,12 @@
                 }
             }
 
-            for (int i = 0; i < sorted.Count; i++)
+            // buscar en la lista ordenada descendentemente
+            foreach (int num in sorted)
             {
-                if (sorted[i] == target)
+                if (num == target)
                     return true;
             }
-
             return false;
         }
 
@@ -100,13 +108,17 @@
         {
             if (n <= 1)
                 return false;
+            if (n == 2)
+                return true;
+            if (n % 2 == 0) 
+                return false; //me salto los casos especiales
 
-            for (int i = 2; i < n; i++)
+            int sqrt = (int)Math.Sqrt(n); //reviso solamente hasta raíz
+            for (int i = 3; i <= sqrt; i += 2)
             {
                 if (n % i == 0)
                     return false;
             }
-
             return true;
         }
 
@@ -120,13 +132,17 @@
                 if (!removed && IsPrime(number))
                 {
                     removed = true;
-                    continue;
+                    continue; // me salto este número
                 }
-
                 temp.Push(number);
             }
 
-            return new Stack<int>(temp);
+            Stack<int> result = new Stack<int>();
+            while (temp.Count > 0)
+            {
+                result.Push(temp.Pop());
+            }
+            return result;
         }
 
         public static Queue<int> QueueFromStack(Stack<int> stack)
