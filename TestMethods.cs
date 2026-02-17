@@ -42,10 +42,15 @@
                 if (i % 2 != 0)
                     value = -value;
 
-                result.Add(value);
+                int j = 0;
+                while (j < result.Count && result[j] < value)
+                {
+                    j++;
+                }
+
+                result.Insert(j, value);
             }
 
-            result.Sort();
             return result;
         }
 
