@@ -71,11 +71,11 @@
             List<int> sorted = new List<int>(list); // copio la lista para ordenarla sin dañar la original
 
             // ordeno
-            for (int i = 0; i < sorted.Count - 1; i++)
+            for (int i = 0; i < sorted.Count - 1; i++) //pasadas (si tengo 5 elementos, solamente necesito 4 pasadas para que quede ordenado)
             {
-                for (int j = 0; j < sorted.Count - 1 - i; j++)
+                for (int j = 0; j < sorted.Count - 1 - i; j++) //comparaciones por pasadas (-1-i porque cada vez que pasa, ya un elemento quedó en su pos def)
                 {
-                    if (sorted[j] < sorted[j + 1])
+                    if (sorted[j] < sorted[j + 1]) //reviso si el actual es menor que el siguiente y swappea
                     {
                         int temp = sorted[j];
                         sorted[j] = sorted[j + 1];
