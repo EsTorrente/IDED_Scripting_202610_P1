@@ -131,8 +131,13 @@
 
         public static Queue<int> QueueFromStack(Stack<int> stack)
         {
-            Stack<int> temp = new Stack<int>(stack);
+            Stack<int> temp = new Stack<int>();
             Queue<int> result = new Queue<int>();
+
+            foreach (int number in stack)
+            {
+                temp.Push(number);
+            }
 
             while (temp.Count > 0)
             {
