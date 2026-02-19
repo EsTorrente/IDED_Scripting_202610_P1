@@ -1,6 +1,6 @@
-hola profe :(
-El parcial lo hice yo sola, pero
-Cometí un error horrible
+hola profe :(  
+El parcial lo hice yo sola, pero  
+Cometí un error horrible  
 
 En esta parte:  
 <img width="568" height="85" alt="image" src="https://github.com/user-attachments/assets/aa9b3bc9-0bcb-49aa-8825-4d5215ca34c6" />  
